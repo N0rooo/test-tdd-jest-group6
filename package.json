@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --coverage --verbose --silent --runInBand"
+    "test": "jest --watchAll --coverage --verbose --silent --runInBand",
+    "test:cov": "jest --coverage"
+
   },
   "author": "",
   "license": "ISC",
