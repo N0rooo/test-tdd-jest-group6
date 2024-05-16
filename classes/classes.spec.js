@@ -146,6 +146,12 @@ test('should reject invalid street number', () => {
 	expect(user.errors).toContain(errorStreetNumber);
 });
 
+test('should handle empty street name', () => {
+	const user = new User('John Doe', 'john@example.com', '', '1234');
+	user.validateStreetName();
+	expect(user.errors).toContain(errorStreetName);
+});
+
 test('should handle empty street number', () => {
 	const user = new User('John Doe', 'john@example.com', 'Main St');
 	user.validateSreetNumber();
