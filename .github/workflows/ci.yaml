@@ -32,3 +32,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
           fail_ci_if_error: true
+      
+      - name: Gitleaks Scanner
+        uses: DariuszPorowski/github-action-gitleaks@v2.0.9
+            
