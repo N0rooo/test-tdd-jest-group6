@@ -1,4 +1,4 @@
-const sayHelloTo = require("./strings")
+const {sayHelloTo, sayHelloErrorMsg} = require("./strings")
 
 describe("The string package", () => {
 	describe("the sayHelloTo function", () => {
@@ -9,3 +9,14 @@ describe("The string package", () => {
 		})
 	})
 })
+
+describe("The string package", () => {
+	describe("the sayHelloTo function", () => {
+		it("should return error if the argument is empty", () => {
+			const actual = sayHelloTo()
+			const expected = sayHelloErrorMsg
+			expect(actual).toBe(expected)
+		})
+	})
+})
+
