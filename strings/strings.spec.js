@@ -1,5 +1,6 @@
 const {sayHelloTo, sayHelloErrorMsg} = require("./strings")
 
+
 describe("The string package", () => {
 	describe("the sayHelloTo function", () => {
 		it("should return 'Hi, Peter!' if the argument is 'Peter'", () => {
@@ -10,6 +11,7 @@ describe("The string package", () => {
 	})
 })
 
+// EX 0
 describe("The string package", () => {
 	describe("the sayHelloTo function", () => {
 		it("should return error if the argument is empty", () => {
