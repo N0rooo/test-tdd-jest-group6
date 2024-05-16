@@ -1,6 +1,6 @@
-const faker = require("faker-br");
+const faker = require("faker-br")
 
-const User = require("./classes")
+const { User, errorStreetName, errorStreetNumber } = require("./classes")
 
 describe("The User class", () => {
 	it("should create a new user", () => {
@@ -15,11 +15,23 @@ describe("The User class", () => {
 		expect(user2.errors[0]).toBe("the name must be at least 5 chars long")
 	})
 
-  it("error the name is require", () => {
+	it("error the name is require", () => {
 		const user2 = new User("", "tom@gmail.com")
 		user2.validateName(user2.name)
 		expect(user2.errors[0]).toBe("the name is required")
 	})
+
+	// it("should create new error message if the street name is invalid", () => {
+	// 	const user3 = new User("tom", "tom@gmail.com", "123", "123")
+	// 	user3.validateStreetName(user3.streetName)
+	// 	// expect(user3.errors[0]).toBe(errorStreetName)
+	// })
+
+	// it("should create new error message if the street number is invalid", () => {
+	// 	const user4 = new User("tom", "tom@gmail.com", "Rua das Flores", "abc")
+	// 	// user4.validateStreetNumber(user4.streetNumber)
+	// 	expect(user4.errors[0]).toBe(errorStreetNumber)
+	// })
 })
 
 describe("The isValid function", () => {
@@ -97,27 +109,57 @@ describe("isValid test", () => {
 
 // EX 5
 
-let dataset;
+let user
 
 beforeEach(() => {
-  dataset = {
-    streetName: faker.address.streetName(),
-    streetNumber: faker.address.streetAddress()
-  };
-});
+	user = new User("Alice", "alice@example.com", "ddzq", "123")
+})
 
 afterEach(() => {
-  dataset = null;
+	user.streetName = null
+	user.streetNumber = null
+})
+
+describe("Dataset tests", () => {
+	it("should have a street name and street number", () => {
+		expect(user.streetName).toBeDefined()
+		expect(user.streetNumber).toBeDefined()
+	})
+	
+
+	it("should have a valid street name and number", () => {
+		expect(user.streetName).toMatch(/\w+/)
+		expect(user.streetNumber).toMatch(/\d+/)
+	})
+})
+
+test('should accept valid street number', () => {
+	const user = new User('John Doe', 'john@example.com', 'Main St', '1234');
+	user.validateSreetNumber();
+	expect(user.errors).not.toContain(errorStreetNumber);
 });
 
-describe('Dataset tests', () => {
-  it('should have a street name and street number', () => {
-    expect(dataset.streetName).toBeDefined();
-    expect(dataset.streetNumber).toBeDefined();
-  });
+test('should reject invalid street number', () => {
+	const user = new User('John Doe', 'john@example.com', 'Main St', 'Main');
+	user.validateSreetNumber();
+	
+	expect(user.errors).toContain(errorStreetNumber);
+});
 
-  it('should have a valid street name and number', () => {
-    expect(dataset.streetName).toMatch(/\w+/);
-    expect(dataset.streetNumber).toMatch(/\d+/);
-  });
+test('should handle empty street name', () => {
+	const user = new User('John Doe', 'john@example.com', '', '1234');
+	user.validateStreetName();
+	expect(user.errors).toContain(errorStreetName);
+});
+
+test('should handle empty street number', () => {
+	const user = new User('John Doe', 'john@example.com', 'Main St');
+	user.validateSreetNumber();
+	expect(user.errors).toContain(errorStreetNumber);
+});
+
+test('should handle numbers with letters', () => {
+	const user = new User('John Doe', 'john@example.com', 'Main St', '56B');
+	user.validateSreetNumber();
+	expect(user.errors).not.toContain(errorStreetNumber);
 });
