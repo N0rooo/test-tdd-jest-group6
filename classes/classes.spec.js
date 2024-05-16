@@ -24,4 +24,30 @@ describe("The User class", () => {
   }
 )});
 
+describe("The isValid function", () => {
+  it("should call validateName, validateEmail, validatePassword functions when isValid fn is called", () => {
+
+    const user = {
+      validateName: () => {},
+      validateEmail: () => {},
+      validatePassword: () => {},
+      isValid: function() {
+        this.validateName();
+        this.validateEmail();
+        this.validatePassword();
+      }
+    };   
+    jest.spyOn(user, 'validatePassword');
+    jest.spyOn(user, 'validateName');
+    jest.spyOn(user, 'validateEmail');
+
+    user.isValid();
+
+    // assertion
+    expect(user.validatePassword).toHaveBeenCalled();
+    expect(user.validateName).toHaveBeenCalled();
+    expect(user.validateEmail).toHaveBeenCalled();
+  });
+});
+
 
