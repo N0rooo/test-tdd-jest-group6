@@ -1,4 +1,30 @@
 const User = require("./classes");
+const faker = require("faker-br");
+
+let dataset;
+
+beforeEach(() => {
+  dataset = {
+    streetName: faker.address.streetName(),
+    streetNumber: faker.address.streetAddress()
+  };
+});
+
+afterEach(() => {
+  dataset = null;
+});
+
+describe('Dataset tests', () => {
+  it('should have a street name and street number', () => {
+    expect(dataset.streetName).toBeDefined();
+    expect(dataset.streetNumber).toBeDefined();
+  });
+
+  it('should have a valid street name and number', () => {
+    expect(dataset.streetName).toMatch(/\w+/);
+    expect(dataset.streetNumber).toMatch(/\d+/);
+  });
+});
 
 describe("The User class", () => {
   it("should create a new user", () => {
@@ -7,9 +33,6 @@ describe("The User class", () => {
     expect(user1.email).toBe("smith@test.com");
   })});
   
-
-
-
   // Make new describe
 // should create new error message if the user name is less than 5 characters
 // the name must be at least 5 chars long
