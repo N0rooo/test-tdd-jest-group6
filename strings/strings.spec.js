@@ -1,4 +1,4 @@
-const sayHelloTo = require("./../strings")
+const sayHelloTo = require("./strings")
 
 describe("The string package", () => {
 	describe("the sayHelloTo function", () => {

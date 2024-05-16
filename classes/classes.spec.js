@@ -1,4 +1,4 @@
-const User = require("./../classes");
+const User = require("./classes");
 
 describe("The User class", () => {
   it("should create a new user", () => {
