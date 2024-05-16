@@ -72,3 +72,28 @@ describe("User class logging", () => {
 		expect(consoleSpy).toHaveBeenCalledWith("validating password...")
 	})
 })
+
+describe("isValid test", () => {
+	let user
+	let validateNameSpy, validateEmailSpy, validatePasswordSpy
+
+	beforeEach(() => {
+		user = new User("Alice", "alice@example.com")
+		validateNameSpy = jest.spyOn(user, "validateName")
+		validateEmailSpy = jest.spyOn(user, "validateEmail")
+		validatePasswordSpy = jest.spyOn(user, "validatePassword")
+	})
+
+	afterEach(() => {
+		validateNameSpy.mockRestore()
+		validateEmailSpy.mockRestore()
+		validatePasswordSpy.mockRestore()
+	})
+
+	it("should call validateName, validateEmail, and validatePassword when isValid is called", () => {
+		user.isValid()
+		expect(validateNameSpy).toHaveBeenCalled()
+		expect(validateEmailSpy).toHaveBeenCalled()
+		expect(validatePasswordSpy).toHaveBeenCalled()
+	})
+})
